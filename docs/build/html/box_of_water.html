@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial for box of rigid water &#8212; dl_field_tutorials 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9d6072eb" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'box_of_water';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial for an OPLS/2005 polyisoprene chain" href="polyisoprene_melt.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dl_field_tutorials 0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">📚 Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tutorial for box of rigid water</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polyisoprene_melt.html">Tutorial for an OPLS/2005 polyisoprene chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pentane.html">Tutorial for pentane molecule (user-define forcefields)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polyethylene-xylene.html">Tutorial for a Polyethylene Chain in a Xylene Solution</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/box_of_water.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Tutorial for box of rigid water</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-water-box">Creating a water box</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisation">Visualisation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tutorial-for-box-of-rigid-water">
+<h1>Tutorial for box of rigid water<a class="headerlink" href="#tutorial-for-box-of-rigid-water" title="Link to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following tutorial assumes you have compiled DL_field and are working from the <strong>dl_f_4.6</strong> directory. Please visit
+the <a class="reference internal" href="getting_started.html"><span class="doc">getting started</span></a> page before starting.</p>
+</div>
+<p>In this tutorial, we will use DL_FIELD to create a box of SPC/E water.</p>
+<p>We require that DL_FIELD has been compiled within a Linux environment (including WSL and cygwin), and you have
+installed both DL_POLY and GROMACS on your system. There are instructions on compiling both software on their
+respective websites.</p>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#create-box"><span class="std std-ref">Creating a water box</span></a></p></li>
+<li><p><a class="reference internal" href="polyethylene-xylene.html#visualise"><span class="std std-ref">Visualisation</span></a></p></li>
+</ul>
+</section>
+<section id="creating-a-water-box">
+<span id="create-box"></span><h2>Creating a water box<a class="headerlink" href="#creating-a-water-box" title="Link to this heading">#</a></h2>
+<p>DL_FIELD has a dedicated solution maker which can be used to create boxes of liquid. This is specified in the
+<em>control</em> file with the below line (line 13)</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1 1.05 g/cm^3 1.6  * Solution Maker: on/off, density, unit, cutoff
+</pre></div>
+</div>
+<p>which takes the following options:</p>
+<dl class="simple glossary">
+<dt id="term-On-Off-Flag"><strong>On/Off Flag</strong><a class="headerlink" href="#term-On-Off-Flag" title="Link to this term">#</a></dt><dd><p><code class="docutils literal notranslate"><span class="pre">1</span></code> to turn the solution maker on; <code class="docutils literal notranslate"><span class="pre">0</span></code> to turn it off.</p>
+</dd>
+<dt id="term-Density"><strong>Density</strong><a class="headerlink" href="#term-Density" title="Link to this term">#</a></dt><dd><p>The target density of your box (e.g. <code class="docutils literal notranslate"><span class="pre">0.1</span></code> for 0.1 mol/dm³).</p>
+</dd>
+<dt id="term-Unit"><strong>Unit</strong><a class="headerlink" href="#term-Unit" title="Link to this term">#</a></dt><dd><p>The density units (e.g. <code class="docutils literal notranslate"><span class="pre">g/cm³</span></code>). This determines the number of molecules in the system
+depending on simulation box size. The box must be orthogonal. Density units, <code class="docutils literal notranslate"><span class="pre">kg/cm³</span></code>, and concentration
+units, <code class="docutils literal notranslate"><span class="pre">mol/dm³</span></code>, are also available. Specifying <code class="docutils literal notranslate"><span class="pre">molecule</span></code> allows the user to specify the number
+of molecules.</p>
+</dd>
+<dt id="term-Cutoff"><strong>Cutoff</strong><a class="headerlink" href="#term-Cutoff" title="Link to this term">#</a></dt><dd><p>The minimum separation (in angstroms) used when packing the liquid molecules (e.g. <code class="docutils literal notranslate"><span class="pre">1.6</span></code>).</p>
+</dd>
+</dl>
+<p>This feature randomly orientates the liquid molecule template and inserts duplicates of them into the
+simulation box. Sometimes, DL_FIELD might be unsuccessful, in which case users should adjust the cutoff value.</p>
+<p>Using the key options highlighted in the following <em>control</em> file, we can make a box of SPC/E water with
+the Solution Maker. The initial input <em>spce.pdb</em> can be accessed <a class="reference external" href="_static/spce.pdb">here</a>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>SPC/E water
+<span class="hll">1        * Construct DL_POLY output files
+</span><span class="hll">gromacs     * Seconday output files (gromacs, chemshell or none).
+</span><span class="hll">opls2005 * Type of force field require (see list below for choices).
+</span>kJ/mol    * Energy unit: kcal/mol, kJ/mol, eV, or K.
+normal   * Conversion criteria (strict, normal, loose)
+0        * Bond type (0=default, 1=harmonic , 2=Morse)
+0        * Angle type (0=default, 1=harmonic, 2=harmonic cos)
+none * Include user-defined information. Put &#39;none&#39; or a .udff filename
+1        * Verbosity mode: 1 = on, 0 = off
+<span class="hll">tutorial_confs/spce.pdb *Examples/ethanol_shell.pdb  *plasticizer/pentane.pdb  * Configuration file.
+</span>none     * Output file in PDB. Put &#39;none&#39; if not needed.
+<span class="hll">1 1 g/cm^3 2.15 * Solution Maker: on/off, density, unit, cutoff)
+</span>0        * Optimise FIELD output size, if possible? 1=yes  0=no
+2        * Atom display: 1 = DL_FIELD format. 2 = Standard format
+1        * Vdw display format: 1 = 12-6 format   2 = LJ format
+default  * Epsilon mixing rule (organic FF only) : 1 = geometric   2 = arithmatic or default
+default  * Sigma mixing rule (organic FF only) : 1 = geometric   2 = arithmatic or default
+1        * Epsilon mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+1        * Sigma mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+1  * Epsilon mixing rule (BETWEEN different FF) : 1 = geometric   2 = arithmatic
+1   * Sigma mixing rule (BETWEEN different FF): 1 = geometric 2 = arithmatic
+0         * Display additional info. for protein 1=Yes  0=No
+0         * Freeze atoms? 1 = Yes (see below)  0 = No
+0         * Tether atoms? 1 = Yes (see below)  0 = No
+0         * Constrain bonds? 1 = Yes (see below) 0 = No
+0         * Apply rigid body? 1 = Yes (see below) 0 = No
+<span class="hll">1     * Periodic condition ? 0=no, other number = type of box (see below)
+</span><span class="hll">40.000  0.0000  0.000000 * Cell vector a (x, y, z)
+</span><span class="hll">0.000    40.000    0.000000 * Cell vector b (x, y, z)
+</span><span class="hll">0.000    0.000  40.000 * Cell vector c (x, y, z)
+</span>default   * 1-4 scaling for coulombic (put default or x for scaling=x)
+default   * 1-4 scaling for vdw (put default or x for scaling=x)
+0  300.0  * Include velocity? 1=yes, 0=no and scaling temperature.
+0         * Position solute at origin? 1 = yes, 0=no
+none  1.8 default * Solvate model? none or specify solvent (see below) and distance criteria.
+0  10.0   * Add counter ions? 1=yes, 0=no,  minimum distance from solute
+
+...
+</pre></div>
+</div>
+</section>
+<section id="visualisation">
+<span id="visualise"></span><h2>Visualisation<a class="headerlink" href="#visualisation" title="Link to this heading">#</a></h2>
+<p>After running DL_FIELD:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./dl_field
+</pre></div>
+</div>
+<p>we can view the output structure file (.gro) in VMD or similar software:</p>
+<a class="reference internal image-reference" href="_images/water.png"><img alt="VMD image of a 4 nm x 4 nm x 4 nm box of SPC/E water" class="align-center" src="_images/water.png" style="width: 500px;" />
+</a>
+<p>We can see here that the water molecules are relatively evenly dispersed within the box. You should always
+check this is the case using the Solution Maker.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The DL_FIELD Solvation Feature can also be used to create a box of water, making use of the
+DL_FIELD solvent templates. This is left as an exercise for the reader. See the
+<a class="reference internal" href="polyethylene-xylene.html"><span class="doc">polyethylene-xylene</span></a> tutorial for an example on how to use this feature.</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="getting_started.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="polyisoprene_melt.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial for an OPLS/2005 polyisoprene chain</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-water-box">Creating a water box</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisation">Visualisation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Lois_Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Lois_Smith.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+# Sphinx build
+docs/_build/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+venv/
+.env/

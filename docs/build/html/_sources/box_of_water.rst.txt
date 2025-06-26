@@ -1,0 +1,52 @@
+Tutorial for box of rigid water
+===============================
+
+.. note::
+    The following tutorial assumes you have compiled DL_field and are working from the **dl_f_4.6** directory. Please visit
+    the :doc:`getting started <getting_started>` page before starting.
+
+In this tutorial, we will use DL_FIELD to create a box of SPC/E water and perform a single-point 
+simulation with DL_POLY and GROMACS to compare their energies. 
+
+We require that DL_FIELD has been compiled within a Linux environment (including WSL and cygwin), and you have 
+installed both DL_POLY and GROMACS on your system. There are instructions on compiling both software on their 
+respective websites.
+
+Creating a water box
+--------------------
+
+DL_FIELD has a dedicated solution maker which can be used to create boxes of liquid. This is specified in the 
+*control* file with the below line (line 13)
+
+.. code-block:: text
+
+    1 1.05 g/cm^3 1.6  * Solution Maker: on/off, density, unit, cutoff
+
+which takes the following options:
+
+.. glossary::
+
+   **On/Off Flag**
+      ``1`` to turn the solution maker on; ``0`` to turn it off.
+
+   **Density**
+      The target density of your box (e.g. ``0.1`` for 0.1 mol/dm³).
+
+   **Unit**
+      The density units (e.g. ``g/cm³``). This determines the number of molecules in the system 
+      depending on simulation box size. The box must be orthogonal. Density units, ``kg/cm³``, and concentration 
+      units, ``mol/dm³``, are also available. Specifying ``molecule`` allows the user to specify the number 
+      of molecules.
+
+   **Cutoff**
+      The minimum separation (in angstroms) used when packing the liquid molecules (e.g. ``15.0``).
+
+
+This feature randomly orientates the liquid molecule template and inserts duplicates of them into the 
+simulation box. Sometimes, DL_FIELD might be unsuccessful, in which case users should adjust the cutoff value. 
+
+
+Single point simulations
+------------------------
+
+DL_FIELD is able to 

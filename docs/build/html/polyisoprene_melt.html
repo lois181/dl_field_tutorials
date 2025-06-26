@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial for an OPLS/2005 polyisoprene chain &#8212; dl_field_tutorials 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9d6072eb" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'polyisoprene_melt';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial for pentane molecule (user-define forcefields)" href="pentane.html" />
+    <link rel="prev" title="Tutorial for box of rigid water" href="box_of_water.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dl_field_tutorials 0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">📚 Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="box_of_water.html">Tutorial for box of rigid water</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tutorial for an OPLS/2005 polyisoprene chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pentane.html">Tutorial for pentane molecule (user-define forcefields)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polyethylene-xylene.html">Tutorial for a Polyethylene Chain in a Xylene Solution</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/polyisoprene_melt.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Tutorial for an OPLS/2005 polyisoprene chain</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polyisoprene-control-file">Polyisoprene CONTROL file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-dl-poly-users-general-use">For DL_POLY Users &amp; General Use</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-gromacs-users">For GROMACS Users</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-lammps-users">For LAMMPS Users</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tutorial-for-an-opls-2005-polyisoprene-chain">
+<h1>Tutorial for an OPLS/2005 polyisoprene chain<a class="headerlink" href="#tutorial-for-an-opls-2005-polyisoprene-chain" title="Link to this heading">#</a></h1>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#poly-control"><span class="std std-ref">Polyisoprene CONTROL file</span></a></p></li>
+<li><p><a class="reference internal" href="#dl-poly"><span class="std std-ref">For DL_POLY Users &amp; General Use</span></a></p></li>
+<li><p><a class="reference internal" href="#gromacs"><span class="std std-ref">For GROMACS Users</span></a></p></li>
+<li><p><a class="reference internal" href="#lammps"><span class="std std-ref">For LAMMPS Users</span></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following tutorial assumes you have compiled DL_field and are working from the <strong>dl_f_4.XX</strong> directory. Please visit
+the <a class="reference internal" href="getting_started.html"><span class="doc">getting started</span></a> page before starting.</p>
+</div>
+<p>This tutorial provides a walk-through for users to assign parameters to an all-atom 32mer cis-(1,4)-polyisoprene chain using the
+OPLS/2005 forcefield. To begin, download the following <a class="reference external" href="_static/polyisoprene.xyz">polyisoprene.xyz</a> file, which contains the
+polymer structure, to the directory <strong>dl_f_4.XX/tutorial_confs/</strong>.</p>
+</section>
+<section id="polyisoprene-control-file">
+<span id="poly-control"></span><h2>Polyisoprene CONTROL file<a class="headerlink" href="#polyisoprene-control-file" title="Link to this heading">#</a></h2>
+<p>We will now create an appropriate CONTROL file and use it to generate DL_POLY and
+GROMACS input files for our system. We include some helpful notes for new users.</p>
+<p>The CONTROL file for this system is printed below</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Control file for a cis-PI chain
+1        * Construct DL_POLY output files
+gromacs        * Seconday output files (gromacs, chemshell or none).
+opls2005  * Type of force field require (see list below for choices).
+kJ/mol  * Energy unit: kcal/mol, kJ/mol, eV, or K.
+normal  * Conversion criteria (strict, normal, loose)
+1        * Bond type (0=default, 1=harmonic , 2=Morse)
+1        * Angle type (0=default, 1=harmonic, 2=harmonic cos)
+none  * Include user-defined information. Put &#39;none&#39; or a .udff filename
+1       * Verbosity mode: 1 = on, 0 = off
+tutorial_confs/PI.xyz  * Configuration file.
+none   * Output file in PDB. Put &#39;none&#39; if not needed.
+0 0.1 mol/dm^3  15.0 * Solution Maker: on/off, density, unit, cutoff)
+0        * Optimise FIELD output size, if possible? 1=yes  0=no
+2         * Atom display: 1 = DL_FIELD format. 2 = Standard format
+2         * Vdw display format: 1 = 12-6 format   2 = LJ format
+default * Epsilon mixing rule (organic FF only) : default, or 1 = geometric, 2 = arithmatic
+default   * Sigma mixing rule (organic FF only) : default, or 1 = geometric, 2 = arithmatic
+1        * Epsilon mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+2        * Sigma mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+1    * Epsilon mixing rule (BETWEEN different FF) : 1 = geometric   2 = arithmatic
+2     * Sigma mixing rule (BETWEEN different FF): 1 = geometric 2 = arithmatic
+0         * Display additional info. for protein 1=Yes  0=No
+0         * Freeze atoms? 1 = Yes (see below)  0 = No
+0         * Tether atoms? 1 = Yes (see below)  0 = No
+0         * Constrain bonds? 1 = Yes (see below) 0 = No
+0         * Apply rigid body? 1 = Yes (see below) 0 = No
+0        * Periodic condition ? 0=no, other number = type of box (see below)
+60.0 0.0   0.0 * Cell vector a (x, y, z)
+0.0  60.0   0.0  * Cell vector b (x, y, z)
+0.0   0.0  60.0 * Cell vector c (x, y, z)
+default   * 1-4 scaling for coulombic (put default or x for scaling=x)
+default   * 1-4 scaling for vdw (put default or x for scaling=x)
+0  300.0  * Include velocity? 1=yes, 0=no and scaling temperature.
+1         * Position solute at origin? 1 = yes, 0=no
+none  1.9 * Solvate model? none or specify solvent (see below) and distance criteria.
+0  10.0   * Add counter ions? 1=yes, 0=no,  minimum distance from solute
+0        * MM energy calculation. 1=Yes, 0=No
+20.0     * Cut off for electrostatic energy calculation (angstrom)
+20.0      * Cut off for vdw energy calculation (angstrom)
+
+************* DL_POLY control ******************
+0          * Run DL_POLY program
+DLPOLY_AMD.Z   * DL_POLY executable filename
+/home/user_pc/DL_POLY/  * absolute path to DL_POLY program
+8          * Number of processors (mpirun)
+0          * MM calculation 1=on  0=off
+3   5000   * Structural Relaxation level (0 - off, 1,2 or 3). Total timestep
+8.0        * cutoff (vdw and electrostatic)
+100000       * Time limit for DL_POLY run (in seconds)
+
+************* Gromacs control ******************
+0            * Run Gromacs
+gmx          * Gromacs executable filename
+/usr/bin/ * absolute path to Gromacs
+1            * MM single-point calc.
+
+
+########################################################
+Atom state specification:  type  Molecular_Group   filter   [value]
+
+#########################################################
+
+Please do not remove those &#39;####&#39; lines.
+All select atom commands must be included within the two &#39;####&#39; lines
+
+Some remarks...
+...
+...
+...
+</pre></div>
+</div>
+<p>This instructs DL_FIELD to produce GROMACS and DL_POLY input files as outputs, controlled by the first
+two lines of the CONTROL file:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1        * Construct DL_POLY output files
+gromacs        * Seconday output files (gromacs, lammps chemshell or none).
+</pre></div>
+</div>
+<p>Successfully running the program (from the <strong>dl_f_4.XX/</strong> home directory) with the command</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./dl_field
+</pre></div>
+</div>
+<p>will produce the following files in the <strong>output/</strong> directory:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>readme.txt*
+dl_field.output
+dl_poly.CONFIG
+dl_poly.CONTROL
+dl_poly.FIELD
+dlf_notation.output
+gromacs.gro
+gromacs.mdp
+gromacs.top
+gromacs1.itp
+</pre></div>
+</div>
+<p>From which we can see a set of standard output files provided for DL_POLY and GROMACS. For helpful notes
+regarding these output files, consult the following sections in this tutorial.</p>
+<p>DL_FIELD also produces up to two .output files. The dlf_notation.output file describes the
+chemical identity of every atom in the system. dl_field.output contains information on the
+conversion process of the user’s specific input files. For more information, consult the reference manual.</p>
+</section>
+<section id="for-dl-poly-users-general-use">
+<span id="dl-poly"></span><h2>For DL_POLY Users &amp; General Use<a class="headerlink" href="#for-dl-poly-users-general-use" title="Link to this heading">#</a></h2>
+<p>DL_FIELD produces the CONFIG, CONTROL and FIELD files required to run a DL_POLY simulation. The following
+section contains useful information, which DL_POLY users may find helpful.</p>
+<p>The line:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>kJ/mol  * Energy unit: kcal/mol, kJ/mol, eV, or K.
+</pre></div>
+</div>
+<p>controls the energy units of the FIELD file. For FFs using the LJ potential, parameters can either be
+expressed in 12-6 format, or directly with their σ, ε values. The format can be controlled via the line</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>2         * Vdw display format: 1 = 12-6 format   2 = LJ format
+</pre></div>
+</div>
+<p>There are some options in the CONTROL file which are FF dependent, and so it is recommended they are kept
+to their default settings. For example, bond types, angle types and 1-4 scaling factors for vdW and
+coulombic interactions:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>0        * Bond type (0=default, 1=harmonic , 2=Morse)
+0        * Angle type (0=default, 1=harmonic, 2=harmonic cos)
+...
+default   * 1-4 scaling for coulombic (put default or x for scaling=x)
+default   * 1-4 scaling for vdw (put default or x for scaling=x)
+</pre></div>
+</div>
+<p>In the case of the bond type and angle type options, they will default to 0 unless the DREIDING potential
+scheme is selected.</p>
+<p>The CONTROL file produced by DL_FIELD is generic, and so should be adjusted manually for your requirements.</p>
+</section>
+<section id="for-gromacs-users">
+<span id="gromacs"></span><h2>For GROMACS Users<a class="headerlink" href="#for-gromacs-users" title="Link to this heading">#</a></h2>
+<p>DL_FIELD produces .mdp, .top, .gro and .itp files required to run a GROMACS simulation. Unlike DL_POLY,
+GROMACS only supports energy units of kJ/mol, therefore the units option</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>kJ/mol  * Energy unit: kcal/mol, kJ/mol, eV, or K.
+</pre></div>
+</div>
+<p>is produces the same .top and .itp files regardless of its setting.</p>
+<p>The .gro file format is strict. In C format:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&quot;%5d%-5s%5s%5d%8.3f%8.3f%8.3f%8.4f%8.4f%8.4f&quot;
+</pre></div>
+</div>
+<p>DL_FIELD does not check if this is violated, for example if the atom labels are more than 5 characters
+in length.</p>
+<p>Finally, the .mdp file produced is generic and should be adjusted based on user requirements. For instance,
+GROMACS offers automatic bond constraints via the <em>constraints</em> flag in the .mdp file. It is also possible
+to freeze atoms via <em>freeze-grps</em>. Users wishing to use these features should manually edit the DL_FIELD
+.mdp file or provide their own.</p>
+</section>
+<section id="for-lammps-users">
+<span id="lammps"></span><h2>For LAMMPS Users<a class="headerlink" href="#for-lammps-users" title="Link to this heading">#</a></h2>
+<p>DL_FIELD will produce the LAMMPS input file <em>lammps.in</em> and one or more data files with the structures and
+topologies, <em>lammpsX.data</em> (X = 1, 2, 3…), depending on the number of molecular species. The <em>lammps.in</em> file
+follows a pre-defined set of rules to ensure consistent FF definitions are maintained, and so is generic and
+should be modified according to user requirements. See the reference manual for an explanation of the settings chosen.</p>
+<p>There are also some restirctions for LAMMPS users applicable to DL_FIELD ver. 4.12, printed here for consideration. These
+may be removed in future versions of the software.</p>
+<ol class="arabic simple">
+<li><p>Only applicable to xyz and PDB input configurations.</p></li>
+<li><p>Multiple potential setting is not available to LAMMPS.</p></li>
+</ol>
+<p>3. FF schemes, such as CHARMM for proteins, that make use of CMAP feature, is not
+available to LAMMPS.</p>
+<p>4. The current version (4.12) does not support the following FF schemes: MISC_FF
+and INORGANIC FFs. DL_FIELD will return an error when one of these schemes
+are selected.</p>
+<ol class="arabic simple" start="5">
+<li><p>Imposing FREEZE and TETHER states for atoms are not available to LAMMPS.</p></li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="box_of_water.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial for box of rigid water</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pentane.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial for pentane molecule (user-define forcefields)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polyisoprene-control-file">Polyisoprene CONTROL file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-dl-poly-users-general-use">For DL_POLY Users &amp; General Use</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-gromacs-users">For GROMACS Users</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-lammps-users">For LAMMPS Users</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Lois_Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Lois_Smith.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

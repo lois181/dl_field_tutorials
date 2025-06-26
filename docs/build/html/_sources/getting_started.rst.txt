@@ -1,0 +1,203 @@
+Getting Started
+===============
+
+Contents
+--------
+
+- :ref:`dl_field_control`
+- :ref:`dl_field_path`
+- :ref:`preparing_tutorial`
+
+Welcome to the Getting Started guide!
+
+This tutorial will walk you through the basics of the DL_field file formats and how to 
+assign forcefield parameters to an example system. Before getting started, you should 
+register to use the software `here <https://www.ccp5.ac.uk/dl_field-registration/>`__.
+
+After downloading the source code, instructions on how to unpack and general guidance can be found
+`here <https://dl-sdg.github.io/RESOURCES/dl_field_howto.html>`__. A brief summary of key DL_field files 
+is provided below. 
+
+Our beginner-friendly tutorials assume you are working from the **dl_f_4.6** directory that is created upon
+unpacking the source code. This directory contains *dl_field.control* (DL_field control file) which controls 
+how input molecular systems are parameterised, for example by defining the forcefield. A breakdown of the structure
+and available features of the control file is provided in :ref:`dl_field_control`.
+
+The paths to the control file, forcefield library files and output files (amoung others) are located in the *dl_f_path* file. The
+paths are defined *relative* to the DL_field home directory (**dl_f_4.6/**), which users should consider when making changes.
+
+Upon compiling the source code, the DL_field executable (*dl_field*) can be used to run the software from the command line with
+
+.. code-block:: console
+
+    $ ./dl_field
+
+
+.. note::
+
+    The *dl_f_path* file must be located in the same directory as the *dl_field* executable.
+
+
+Successful structure conversions result in output files written to the directory specified in *dl_f_path* (**/output** by 
+default). For example, the GROMACS *.mdp*, *.top* and *.gro* input files or DL_POLY/Lammps equivalents. For further details, consult
+the `general guidance <https://dl-sdg.github.io/RESOURCES/dl_field_howto.html>`__ page, `reference manual <_static/MAN_DL_FIELD_4.11.pdf>`__, or 
+the tutorials in this series.
+
+
+
+.. _dl_field_control:
+
+DL_field control file
+---------------------
+
+The DL_field *control* file contains a set of control options for all the operations DL_field provides. Below is an example file
+where we highlight key directives and things to consider in order to run DL_field on a basic system. For more detailed 
+information, visit this `page <https://dl-sdg.github.io/RESOURCES/TUTORIALS/dlf_5.html>`__. 
+
+An example *control* file is shown below
+
+
+
+.. code-block:: text
+    :emphasize-lines: 2, 3, 4, 11
+
+    Control file title. For DL_FIELD 4.11
+    1        * Construct DL_POLY output files
+    gromacs        * Seconday output files (gromacs, chemshell or none). 
+    charmm22_prot  * Type of force field require (see list below for choices).
+    kcal/mol  * Energy unit: kcal/mol, kJ/mol, eV, or K.
+    normal  * Conversion criteria (strict, normal, loose)
+    1        * Bond type (0=default, 1=harmonic , 2=Morse)
+    1        * Angle type (0=default, 1=harmonic, 2=harmonic cos)
+    none  * Include user-defined information. Put 'none' or a .udff filename
+    1       * Verbosity mode: 1 = on, 0 = off
+    Examples/sod1.pdb  * Configuration file.
+    none   * Output file in PDB. Put 'none' if not needed.
+    0 0.1 mol/dm^3  15.0 * Solution Maker: on/off, density, unit, cutoff)
+    0        * Optimise FIELD output size, if possible? 1=yes  0=no
+    2         * Atom display: 1 = DL_FIELD format. 2 = Standard format
+    2         * Vdw display format: 1 = 12-6 format   2 = LJ format
+    default * Epsilon mixing rule (organic FF only) : default, or 1 = geometric, 2 = arithmatic
+    default   * Sigma mixing rule (organic FF only) : default, or 1 = geometric, 2 = arithmatic
+    1        * Epsilon mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+    2        * Sigma mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+    1    * Epsilon mixing rule (BETWEEN different FF) : 1 = geometric   2 = arithmatic
+    2     * Sigma mixing rule (BETWEEN different FF): 1 = geometric 2 = arithmatic
+    0         * Display additional info. for protein 1=Yes  0=No
+    0         * Freeze atoms? 1 = Yes (see below)  0 = No
+    0         * Tether atoms? 1 = Yes (see below)  0 = No
+    1         * Constrain bonds? 1 = Yes (see below) 0 = No
+    0         * Apply rigid body? 1 = Yes (see below) 0 = No
+    0        * Periodic condition ? 0=no, other number = type of box (see below)
+    60.0 0.0   0.0 * Cell vector a (x, y, z)
+    0.0  60.0   0.0  * Cell vector b (x, y, z)
+    0.0   0.0  60.0 * Cell vector c (x, y, z)
+    default   * 1-4 scaling for coulombic (put default or x for scaling=x)
+    default   * 1-4 scaling for vdw (put default or x for scaling=x)
+    0  300.0  * Include velocity? 1=yes, 0=no and scaling temperature.
+    1         * Position solute at origin? 1 = yes, 0=no
+    none  1.9 * Solvate model? none or specify solvent (see below) and distance criteria.
+    0  10.0   * Add counter ions? 1=yes, 0=no,  minimum distance from solute
+    0        * MM energy calculation. 1=Yes, 0=No
+    20.0     * Cut off for electrostatic energy calculation (angstrom)
+    20.0      * Cut off for vdw energy calculation (angstrom)
+
+    ************* DL_POLY control ******************
+    1          * Run DL_POLY program
+    DLPOLY_AMD.Z   * DL_POLY executable filename
+    /home/user_pc/DL_POLY/  * absolute path to DL_POLY program
+    8          * Number of processors (mpirun)
+    0          * MM calculation 1=on  0=off
+    3   5000   * Structural Relaxation level (0 - off, 1,2 or 3). Total timestep
+    8.0        * cutoff (vdw and electrostatic)
+    100000       * Time limit for DL_POLY run (in seconds)
+
+    ************* Gromacs control ******************
+    0            * Run Gromacs
+    gmx          * Gromacs executable filename
+    /usr/bin/ * absolute path to Gromacs
+    1            * MM single-point calc.
+
+
+    ########################################################
+    Atom state specification:  type  Molecular_Group   filter   [value]
+
+    FREEZE     ORG1    cp
+    FREEZE     ORG2    CT
+
+    RIGID A
+
+    TETHER     CLY     st     100.0
+
+    CONSTRAIN  SOD1    h-bond
+
+    #########################################################
+
+    Please do not remove those '####' lines.
+    All select atom commands must be included within the two '####' lines
+
+    Some remarks...
+    ...
+    ...
+    ...
+
+.. note::
+
+    Comments in the control file are specified with the ``*`` character.
+
+
+.. note::
+
+    The order of the control settings is fixed and must not be removed nor rearranged.
+
+Highlighted are key control options required to run a successful DL_field operation. The first two specify the format of the 
+output files DL_field creates. The Molecular Dynamics packages DL_POLY, GROMACS and Lammps are currently supported, along 
+with ChemShell for QM/MM. DL_field always produces DL_POLY files (first line), whereas the second line specifies the format of 
+secondary output files.
+
+The third highlighted line provides the forcefield used for the parameter assignment. For a list of available forcefields, consult 
+the reference manual.
+
+The final line highlighted is how users can specify the path to their input structure. DL_field currently supports the PDB, xyz and mol2 
+file formats. For more information on how to ensure DL_field can read your input structure properly, visit this
+`page <https://dl-sdg.github.io/RESOURCES/TUTORIALS/dlf_11.html>`__.
+
+The other operations in the *control* file may be changed according to specific user or forcefield requirements. The 
+:doc:`tutorials <index>` in this series provide examples of this for various systems.
+
+
+.. _dl_field_path:
+
+DL_field path file
+---------------------
+
+As mentioned previously, the *dl_f_path* file contains the *relative* paths to the *control* file
+
+
+.. _preparing_tutorial:
+
+Setting up the tutorials
+------------------------
+
+To keep track of the tutorial material, create the following two directories in **dl_f_4.6/**.
+
+.. code-block:: console
+
+    $ mkdir tutorial_confs
+    $ mkdir tutorial_controls
+
+Here we will place the input molecule configuration files and corresponding *control* file for each tutorial. An example
+control file should already be located in **dl_f_4.6/**, which we can copy to **tutorial_controls/**. 
+
+Finally, we need to update *dl_f_path* with the new *control* file location. Comment out the old location and add the highlighted
+ line.
+
+
+.. code-block:: text
+    :emphasize-lines: 2
+
+    # control = dl_field.control # old location
+    control = tutorial_controls/dl_field.control # new location
+
+
+The file name can be modified from the default *dl_field.control* as required. 

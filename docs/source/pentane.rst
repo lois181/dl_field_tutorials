@@ -1,0 +1,484 @@
+Tutorial for pentane molecule (user-define forcefields)
+=======================================================
+
+.. note::
+    The following tutorial assumes you have compiled DL_field and are working from the **dl_f_<version>** directory. Please visit
+    the :doc:`getting started <getting_started>` page before starting.
+
+
+DL_FIELD provides users with a range of commonly used MD forcefields (see reference manual). However, sometimes we may wish to use a forcefield (FF) not already provided,
+or change some parameters in an existing FF. DL_FIELD offers a clean and intuitive way to 
+achieve this, which is demonstrated in the following tutorial. 
+
+Contents
+--------
+
+- :ref:`no_udff`
+- :ref:`udff_file`
+- :ref:`mod_udff`
+- :ref:`with_udff`
+
+.. _no_udff:
+
+Running DL_FIELD without UDFF (OPLS2005)
+----------------------------------------
+
+We will first assign parameters to a simple pentane molecule using the OPLS2005 FF. You can 
+access the input structure in *xyz* format `here <_static/pentane.xyz>`__. Save this to the 
+**tutorial_confs/** directory (or change its PATH in the *control* file). We can then use the 
+following *control* file options:
+
+.. code-block:: text
+
+    Control file for pentane.xyz
+    1        * Construct DL_POLY output files
+    gromacs        * Seconday output files (gromacs, lammps, chemshell or none). 
+    opls2005  * Type of force field require (see list below for choices).
+    kJ/mol  * Energy unit: kcal/mol, kJ/mol, eV, or K.
+    normal  * Conversion criteria (strict, normal, loose)
+    1        * Bond type (0=default, 1=harmonic , 2=Morse)
+    1        * Angle type (0=default, 1=harmonic, 2=harmonic cos)
+    none  * Include user-defined information. Put 'none' or a .udff filename
+    1       * Verbosity mode: 1 = on, 0 = off
+    tutorial_confs/pentane.xyz  * Configuration file.
+    none   * Output file in PDB. Put 'none' if not needed.
+    0 0.1 mol/dm^3  15.0 * Solution Maker: on/off, density, unit, cutoff)
+    0        * Optimise FIELD output size, if possible? 1=yes  0=no
+    2         * Atom display: 1 = DL_FIELD format. 2 = Standard format
+    2         * Vdw display format: 1 = 12-6 format   2 = LJ format
+    default * Epsilon mixing rule (organic FF only) : default, or 1 = geometric, 2 = arithmatic
+    default   * Sigma mixing rule (organic FF only) : default, or 1 = geometric, 2 = arithmatic
+    1        * Epsilon mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+    2        * Sigma mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+    1    * Epsilon mixing rule (BETWEEN different FF) : 1 = geometric   2 = arithmatic
+    2     * Sigma mixing rule (BETWEEN different FF): 1 = geometric 2 = arithmatic
+    0         * Display additional info. for protein 1=Yes  0=No
+    0         * Freeze atoms? 1 = Yes (see below)  0 = No
+    0         * Tether atoms? 1 = Yes (see below)  0 = No
+    0         * Constrain bonds? 1 = Yes (see below) 0 = No
+    0         * Apply rigid body? 1 = Yes (see below) 0 = No
+    0        * Periodic condition ? 0=no, other number = type of box (see below)
+    60.0 0.0   0.0 * Cell vector a (x, y, z)
+    0.0  60.0   0.0  * Cell vector b (x, y, z)
+    0.0   0.0  60.0 * Cell vector c (x, y, z)
+    default   * 1-4 scaling for coulombic (put default or x for scaling=x)
+    default   * 1-4 scaling for vdw (put default or x for scaling=x)
+    0  300.0  * Include velocity? 1=yes, 0=no and scaling temperature.
+    1         * Position solute at origin? 1 = yes, 0=no
+    none  1.9 * Solvate model? none or specify solvent (see below) and distance criteria.
+    0  10.0   * Add counter ions? 1=yes, 0=no,  minimum distance from solute
+    0        * MM energy calculation. 1=Yes, 0=No
+    20.0     * Cut off for electrostatic energy calculation (angstrom)
+    20.0      * Cut off for vdw energy calculation (angstrom)
+
+    ************* DL_POLY control ******************
+    0          * Run DL_POLY program
+    DLPOLY_AMD.Z   * DL_POLY executable filename
+    /home/user_pc/DL_POLY/  * absolute path to DL_POLY program
+    8          * Number of processors (mpirun)
+    0          * MM calculation 1=on  0=off
+    3   5000   * Structural Relaxation level (0 - off, 1,2 or 3). Total timestep
+    8.0        * cutoff (vdw and electrostatic)
+    100000       * Time limit for DL_POLY run (in seconds)
+
+    ************* Gromacs control ******************
+    0            * Run Gromacs
+    gmx          * Gromacs executable filename
+    /usr/bin/ * absolute path to Gromacs
+    1            * MM single-point calc.
+
+
+    ########################################################
+    Atom state specification:  type  Molecular_Group   filter   [value]
+
+    #########################################################
+
+    Please do not remove those '####' lines.
+    All select atom commands must be included within the two '####' lines
+
+    Some remarks...
+    ...
+    ...
+    ...
+
+This instructs DL_FIELD to produce GROMACS and DL_POLY input files as outputs. For additional 
+guidance and notes on creating a suitable *control* file, please visit the 
+`polyisoprene tutorial <polyisoprene_melt>`__. 
+
+Successfully running the program (from the **dl_f_4.6/** home directory) with the command 
+
+.. code-block:: console
+
+    $ ./dl_field
+
+provides us with a set of output files in **dl_f_4.XX/output/**.
+
+We could use these files for our simulations, but the alternative updated OPLS/2020 forcefield 
+offers improved errors on experimental properties, such as density and heats of vaporisation, along 
+with accurate self-diffusion coefficients for liquid alkanes [1]. However, since DL_FIELD does not
+natively provide this FF, we can use a *udff* (user-define FF) file to change the 
+parameters ourselves. 
+
+.. _udff_file:
+
+The UDFF file format
+--------------------
+
+The *udff* file allows users to define new FF models or change model parameters without 
+having to change the FF library files located in the **lib/** directory. As such, is uses the 
+same *DIRECTIVES* as the *.sf* and *.par* files. The general format is provided below 
+
+.. code-block:: text
+
+    POTENTIAL opls2005
+
+    UNIT kcal/mol
+
+    
+    [OPTIONAL DIRECTIVES]
+    
+
+    END POTENTIAL
+
+The only compulsory *DIRECTIVES* are POTENTIAL, END POTENTIAL and UNIT. The POTENTIAL 
+*DIRECTIVE* defines the location of relevant FF data. Because we are modifying the OPLS2005 
+model, this is what we specify. UNIT defines the energy units of any potential parameters in the 
+*udff*, and DL_FIELD converts these automatically into the units specified in the *control* file. 
+Finally, END POTENTIAL is placed at the end of the *udff* and encloses all optional *DIRECTIVES*. 
+
+.. _mod_udff:
+
+Modifying OPLS2005 with UDFF
+----------------------------
+
+In the OPLS/2020 FF, the following changes were made to the OPLS2005 parameters (in bold)
+
+.. list-table:: Torsion Coefficients
+   :widths: 20 30 20 20 20
+   :header-rows: 1
+
+   * -  
+     - torsion
+     - V_1
+     - V_2
+     - V_3
+   * - OPLS2005
+     - CT-CT-CT-CT
+     - 1.30
+     - -0.05
+     - 0.20
+   * - OPLS/2020
+     - CT-CT-CT-CT
+     - **0.85**
+     - **-0.20**
+     - 0.20
+
+.. list-table:: Non-bonded parameters
+   :widths: 20 10 15 15 15 15
+   :header-rows: 2
+
+   * - atom
+     - q
+     - OPLS2005
+     - 
+     - OPLS/2020
+     - 
+   * - 
+     - 
+     - σ
+     - ε
+     - σ
+     - ε
+   * - H
+     - 0.06
+     - 2.500
+     - 0.030
+     - **2.480**
+     - **0.026**
+   * - CH\ :sub:`2`
+     - −0.18
+     - 3.500
+     - 0.066
+     - **3.510**
+     - 0.066
+   * - *n*-CH\ :sub:`3`
+     - −0.18
+     - 3.500
+     - 0.066
+     - **3.550**
+     - 0.066
+
+
+We can make these changes to the OPLS2005 FF without affecting the rest of the parameters by 
+including more DIRECTIVES in our *udff* file. If we were only interested in modifying the 
+CT-CT-CT-CT dihedral parameters, we could use the DIHEDRAL and END DIHEDRAL
+DIRECTIVES alone:
+
+ .. code-block:: text
+
+    POTENTIAL ...
+
+    UNIT ...
+
+    DIHEDRAL
+    CT   CT   CT   CT   0.85   -0.20   0.20
+    END DIHEDRAL
+
+    END POTENTIAL
+
+However, the OPLS/2020 FF makes a distinction between the non-bonded interaction parameters of the 
+C in CH3 and C in CH2 atoms, which are represented with the same atom type (ATOM_KEY CT) under
+the OPLS2005 FF. Therefore, we can use a MOLECULE template where we define a new ATOM_TYPE to 
+account for this difference using the *ATOM_TYPE* *DIRECTIVE*:
+
+.. code-block:: text
+
+    ...
+
+    ATOM_TYPE     key     element    mass     remark
+    Cp_alk_2020    CT3     C        12.0115    ! OPLS/2020 CH3
+    END ATOM_TYPE
+    ...
+
+The DIRECTIVE takes 5 inputs: the ATOM_TYPE, ATOM_KEY, atomic element, molecular mass, and a remark 
+which is ignored by DL_FIELD. In order for DL_FIELD to recognise the new atom type, we also have to define it 
+in the **lib/dl_field.atom_type** file in the following section:
+
+.. code-block:: text
+
+  ----------------------------------------
+  January 2015 C W Yong
+  Revised January 2016
+  Use ATOM_TYPE to determine OPLS2005 type
+  for BCI determination.
+  Do not use DL_FIELD type to determine BCI
+  DL_FIELD   OPLS2005
+  CT         C135      Cp_alk_2020 * add this line
+  CT         C135      C_alkane
+  CT         C135      Cp_alkane
+  CT         C135      Cs_alkane
+  ...
+
+We then define our new MOLECULE, and its connections, which includes 
+the new ATOM_TYPE with the MOLECULE_TYPE and MOLECULE DIRECTIVES:
+
+
+.. code-block:: text
+
+    ...
+
+    MOLECULE_TYPE MOLECULE_KEY total_mass
+    pentane        PENT         72.1531  ! C5H12
+    END MOLECULE_TYPE
+
+
+
+    MOLECULE pentane 17 0
+    C1   Cp_alk_2020 -0.18
+    H11  HC_alkane  0.06              H11 H21 H31 H41 H51 
+    H12  HC_alkane  0.06              |   |   |   |   |
+    H13  HC_alkane  0.06          H12-C1--C2--C3--C4--C5-H62
+    C2   Cs_alkane -0.12              |   |   |   |   |
+    H21  HC_alkane  0.06             H13 H22 H32 H42 H52 
+    H22  HC_alkane  0.06
+    C3   Cs_alkane -0.12
+    H31  HC_alkane  0.06
+    H32  HC_alkane  0.06
+    C4   Cs_alkane -0.12
+    H41  HC_alkane  0.06
+    H42  HC_alkane  0.06
+    C5   Cp_alk_2020 -0.18
+    H51  HC_alkane  0.06
+    H62  HC_alkane  0.06
+    H52  HC_alkane  0.06
+    CONNECT C1  > H11 H12 H13 C2
+    CONNECT H11 > C1
+    CONNECT H12 > C1
+    CONNECT H13 > C1
+    CONNECT C2  > C1 H21 H22 C3
+    CONNECT H21 > C2
+    CONNECT H22 > C2
+    CONNECT C3  > H31 H32 C2 C4
+    CONNECT H31 > C3
+    CONNECT H32 > C3
+    CONNECT C4  > H41 H42 C3 C5
+    CONNECT H41 > C4
+    CONNECT H42 > C4
+    CONNECT C5  > H51 H62 H52 C4
+    CONNECT H51 > C5
+    CONNECT H62 > C5
+    CONNECT H52 > C5
+    END MOLECULE
+
+    ...
+
+The MOLECULE_TYPE DIRECTIVE defines the MOLECULE_TYPE (pentane), MOLECULE_KEY and total mass of the 
+MOLECULE. The MOLECULE_KEY is an important MOLECULE identifier which will be used in its *pdb* file. 
+To conform to the *pdb* format, it can be up to 4 characters long. 
+
+The MOLECULE directive then defines each ATOM in the MOLECULE, along with their explicit connections 
+via the CONNECT DIRECTIVE. Here, there are additional optional DIRECTIVES which can exclude or only 
+include certain MOLECULE interactions, which we will not make use of in this tutorial. Consult the 
+reference manual for more information.
+
+An issue with defining a new ATOM_TYPE is that now we have to explicitly include every relevant
+BOND, ANGLE and DIHEDRAL parameter which includes it, most of which remain unchanged 
+from the OPLS2005 FF. This would be tedious, so DL_FIELD provides an EQUIVALENCE DIRECTIVE to help. 
+We can use this to match FF parameters of different ATOM_KEYS. For our MOLECULE:
+
+.. code-block:: text
+
+    ...
+
+    EQUIVALENCE
+    CT3  >  bond_CT angle_CT dihedral_CT inv_CT imp_CT shell_CT tbp_CT
+    END EQUIVALENCE
+
+    ...
+
+This treats the CT3 ATOM_KEY associated with our newly defined ATOM_TYPE as the ATOM_TYPE CT, and 
+assigns its FF parameters accordingly. In this example, we have done so for every parameter 
+except the non-bonded ones (vdw_CT), which differ between CT and CT3 atoms. For more information, 
+consult the reference manual. 
+
+Finally, we need to complete the *udff* file by modifying the required FF paramaters. Note that, since, 
+we matched the CT3 and CT DIHEDRAL parameters, we only need to define one new dihedral.
+
+.. code-block:: text
+
+    ...
+
+    VDW 
+    CT  3.510 0.066
+    CT3 3.550 0.066
+    HC  2.480 0.026
+    END VDW 
+
+    DIHEDRAL 
+    CT   CT   CT   CT   0.85  -0.20  0.20
+    END DIHEDRAL
+
+    ...
+
+Here, the VDW DIRECTIVE defines new σ and ε values for ATOM_TYPES CT, CT3 and HC; which are all modified under the OPLS/2020 FF. 
+The completed *udff* file is printed below:
+
+
+.. code-block:: text
+
+    POTENTIAL OPLS2005
+
+    UNIT kcal/mol
+
+    ATOM_TYPE     key     element    mass     remark
+    Cp_alk_2020    CT3     C        12.0115    ! OPLS/2020 CH3
+    END ATOM_TYPE
+
+    MOLECULE_TYPE MOLECULE_KEY total_mass
+    pentane        PENT         72.1531  ! C5H12
+    END MOLECULE_TYPE
+
+
+
+    MOLECULE pentane 17 0
+    C1   Cp_alk_2020 -0.18
+    H11  HC_alkane  0.06              H11 H21 H31 H41 H51 
+    H12  HC_alkane  0.06              |   |   |   |   |
+    H13  HC_alkane  0.06          H12-C1--C2--C3--C4--C5-H62
+    C2   Cs_alkane -0.12              |   |   |   |   |
+    H21  HC_alkane  0.06             H13 H22 H32 H42 H52 
+    H22  HC_alkane  0.06
+    C3   Cs_alkane -0.12
+    H31  HC_alkane  0.06
+    H32  HC_alkane  0.06
+    C4   Cs_alkane -0.12
+    H41  HC_alkane  0.06
+    H42  HC_alkane  0.06
+    C5   Cp_alk_2020 -0.18
+    H51  HC_alkane  0.06
+    H62  HC_alkane  0.06
+    H52  HC_alkane  0.06
+    CONNECT C1  > H11 H12 H13 C2
+    CONNECT H11 > C1
+    CONNECT H12 > C1
+    CONNECT H13 > C1
+    CONNECT C2  > C1 H21 H22 C3
+    CONNECT H21 > C2
+    CONNECT H22 > C2
+    CONNECT C3  > H31 H32 C2 C4
+    CONNECT H31 > C3
+    CONNECT H32 > C3
+    CONNECT C4  > H41 H42 C3 C5
+    CONNECT H41 > C4
+    CONNECT H42 > C4
+    CONNECT C5  > H51 H62 H52 C4
+    CONNECT H51 > C5
+    CONNECT H62 > C5
+    CONNECT H52 > C5
+    END MOLECULE
+
+
+    EQUIVALENCE
+    CT3  >  bond_CT angle_CT dihedral_CT inv_CT imp_CT shell_CT tbp_CT
+    END EQUIVALENCE
+
+
+    VDW 
+    CT  3.510 0.066
+    CT3 3.550 0.066
+    HC  2.480 0.026
+    END VDW 
+
+    DIHEDRAL 
+    CT   CT   CT   CT   0.85  -0.20  0.20
+    END DIHEDRAL
+
+
+    END POTENTIAL
+
+
+.. _with_udff:
+
+Running DL_FIELD with UDFF 
+--------------------------
+
+To use it, we can provide DL_FIELD with a *pdb* file with the correct atom labelling (download `here <_static/pentane.pdb>`__). Move 
+this to the appropriate directory and then make sure the following two lines of the *control* file are modified:
+
+.. code-block:: text
+
+    ...
+    pentane.udff * Include path to .udff file (previously 'none')
+    ...
+    tutorial_confs/pentane.pbd  * Configuration file. Change from .xyz to .pdb
+
+  
+Run DL_FIELD with 
+
+.. code-block:: console
+
+    $ ./dl_field
+
+and verify yourself that the output files in **dl_f_4.XX/output/** contain the modified parameters.
+
+
+[1]: Ghahremanpour MM, Tirado-Rives J, Jorgensen WL. Refinement of the Optimized Potentials 
+for Liquid Simulations Force Field for Thermodynamics and Dynamics of Liquid Alkanes. 
+J Phys Chem B. 2022 Aug 11;126(31):5896-5907. doi: 10.1021/acs.jpcb.2c03686. Epub 2022 Aug 1. 
+PMID: 35914179; PMCID: PMC9939004.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Getting Started &#8212; dl_field_tutorials 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9d6072eb" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial for box of rigid water" href="box_of_water.html" />
+    <link rel="prev" title="Welcome to the Beginner’s DL_Field Tutorials!" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dl_field_tutorials 0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">📚 Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="box_of_water.html">Tutorial for box of rigid water</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polyisoprene_melt.html">Tutorial for an OPLS/2005 polyisoprene chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pentane.html">Tutorial for pentane molecule (user-define forcefields)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polyethylene-xylene.html">Tutorial for a Polyethylene Chain in a Xylene Solution</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/getting_started.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Getting Started</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-field-control-file">DL_FIELD control file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-field-path-file">DL_FIELD path file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-tutorials">Setting up the tutorials</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<p>Welcome to the Getting Started guide!</p>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dl-field-control"><span class="std std-ref">DL_FIELD control file</span></a></p></li>
+<li><p><a class="reference internal" href="#dl-field-path"><span class="std std-ref">DL_FIELD path file</span></a></p></li>
+<li><p><a class="reference internal" href="#preparing-tutorial"><span class="std std-ref">Setting up the tutorials</span></a></p></li>
+</ul>
+<p>This tutorial will walk you through the basics of the DL_FIELD file formats and how to
+assign forcefield parameters to an example system. Before getting started, you should
+register to use the software <a class="reference external" href="https://www.ccp5.ac.uk/dl_field-registration/">here</a>.</p>
+<p>After downloading the source code, instructions on how to unpack and general guidance can be found
+<a class="reference external" href="https://dl-sdg.github.io/RESOURCES/dl_field_howto.html">here</a>. A brief summary of key DL_FIELD files
+is provided below.</p>
+<p>Our beginner-friendly tutorials assume you are working from the <strong>dl_f_4.XX/</strong> (e.g. <strong>dl_f_4.12/</strong>, version dependent)
+directory that is created upon unpacking the source code. This directory contains <em>dl_field.control</em> (DL_FIELD
+CONTROL file) which controls how input molecular systems are parameterised, for example by defining the forcefield.
+A breakdown of the structure and available features of the control file is provided in <a class="reference internal" href="#dl-field-control"><span class="std std-ref">DL_FIELD control file</span></a>.</p>
+<p>The paths to the CONTROL file, forcefield library files and output files (amoung others) are located in the <em>dl_f_path</em> file. The
+paths are defined <em>relative</em> to the DL_FIELD home directory (<strong>dl_f_4.XX/</strong>), which users should consider when making changes.</p>
+<p>Upon compiling the source code, the DL_FIELD executable (<em>dl_field</em>) can be used to run the software from the command line with</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./dl_field
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <em>dl_f_path</em> file must be located in the same directory as the <em>dl_field</em> executable.</p>
+</div>
+<p>Successful structure conversions result in output files written to the directory specified in <em>dl_f_path</em> (<strong>/output</strong> by
+default). For example, the GROMACS <em>.mdp</em>, <em>.top</em> and <em>.gro</em> input files or DL_POLY/LAMMPS equivalents. For further details, consult
+the <a class="reference external" href="https://dl-sdg.github.io/RESOURCES/dl_field_howto.html">general guidance</a> page, <a class="reference external" href="_static/dl_f_4.12_manual.pdf">reference manual</a>, or
+the tutorials in this series.</p>
+</section>
+<section id="dl-field-control-file">
+<span id="dl-field-control"></span><h2>DL_FIELD control file<a class="headerlink" href="#dl-field-control-file" title="Link to this heading">#</a></h2>
+<p>The DL_FIELD CONTROL file contains a set of control options for all the operations DL_FIELD provides. Below is an example file
+where we highlight key directives and things to consider in order to run DL_FIELD on a basic system. For more detailed
+information, visit this <a class="reference external" href="https://dl-sdg.github.io/RESOURCES/TUTORIALS/dlf_5.html">page</a>.</p>
+<p>An example CONTROL file is shown below</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Control file title. For DL_FIELD 4.10
+<span class="hll">1        * Construct DL_POLY output files
+</span><span class="hll">gromacs     * Seconday output files (gromacs, chemshell or none).
+</span><span class="hll">opls2005  * Type of force field require (see list below for choices).
+</span>kcal/mol  * Energy unit: kcal/mol, kJ/mol, eV, or K.
+normal  * Conversion criteria (strict, normal, loose)
+1        * Bond type (0=default, 1=harmonic , 2=Morse)
+1        * Angle type (0=default, 1=harmonic, 2=harmonic cos)
+none  * Include user-defined information. Put &#39;none&#39; or a .udff filename
+1       * Verbosity mode: 1 = on, 0 = off
+<span class="hll">PE.xyz  * Configuration file.
+</span>none   * Output file in PDB. Put &#39;none&#39; if not needed.
+0 0.1 mol/dm^3  15.0 * Solution Maker: on/off, density, unit, cutoff)
+0        * Optimise FIELD output size, if possible? 1=yes  0=no
+2         * Atom display: 1 = DL_FIELD format. 2 = Standard format
+2         * Vdw display format: 1 = 12-6 format   2 = LJ format
+default * Epsilon mixing rule (organic FF only) : default, or 1 = geometric, 2 = arithmatic
+default   * Sigma mixing rule (organic FF only) : default, or 1 = geometric, 2 = arithmatic
+1        * Epsilon mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+2        * Sigma mixing rule (inorganic FF only) : 1 = geometric   2 = arithmatic
+1    * Epsilon mixing rule (BETWEEN different FF) : 1 = geometric   2 = arithmatic
+2     * Sigma mixing rule (BETWEEN different FF): 1 = geometric 2 = arithmatic
+0         * Display additional info. for protein 1=Yes  0=No
+0         * Freeze atoms? 1 = Yes (see below)  0 = No
+0         * Tether atoms? 1 = Yes (see below)  0 = No
+0         * Constrain bonds? 1 = Yes (see below) 0 = No
+0         * Apply rigid body? 1 = Yes (see below) 0 = No
+1        * Periodic condition ? 0=no, other number = type of box (see below)
+120.0 0.0   0.0 * Cell vector a (x, y, z)
+0.0  120.0   0.0  * Cell vector b (x, y, z)
+0.0   0.0  120.0 * Cell vector c (x, y, z)
+default   * 1-4 scaling for coulombic (put default or x for scaling=x)
+default   * 1-4 scaling for vdw (put default or x for scaling=x)
+0  300.0  * Include velocity? 1=yes, 0=no and scaling temperature.
+1         * Position solute at origin? 1 = yes, 0=no
+none  1.9 default * Solvate model? none or specify solvent (see below), distance criteria and FF.
+0  10.0   * Add counter ions? 1=yes, 0=no,  minimum distance from solute
+0         * Not use
+0         * Not use
+0         * Not use
+
+************* DL_POLY control ******************
+0          * Run DL_POLY program
+DLPOLY.Z   * DL_POLY executable filename
+/home/usr/ * absolute path to DL_POLY program
+4          * Number of processors (mpirun)
+1          * MM calculation 1=on  0=off
+0   1000   * Structural Relaxation level (0 - off, 1,2 or 3). Total timestep
+8.0        * cutoff (vdw and electrostatic)
+100000       * Time limit for DL_POLY run (in seconds)
+
+************* Gromacs control ******************
+0            * Run Gromacs
+gmx          * Gromacs executable filename
+/usr/bin/gmx * absolute path to Gromacs
+0            * MM single-point calc.
+
+************* Lammps control ******************
+0            * Run Lammps
+lmp          * Lammps executable filename
+/usr/bin/ * absolute path to Lammps
+1            * MM single-point calc.
+
+
+########################################################
+Atom state specification:  type  Molecular_Group   filter   [value]
+
+FREEZE     ORG1    cp
+FREEZE     ORG2    CT
+
+RIGID A
+
+TETHER     CLY     st     100.0
+
+CONSTRAIN  SOD1    h-bond
+
+#########################################################
+
+Please do not remove those &#39;####&#39; lines.
+All select atom commands must be included within the two &#39;####&#39; lines
+
+Some remarks...
+...
+...
+...
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Comments in the control file are specified with the <code class="docutils literal notranslate"><span class="pre">*</span></code> character.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The order of the control settings is fixed and must not be removed nor rearranged.</p>
+</div>
+<p>Highlighted are key control options required to run a successful DL_FIELD operation. The first two specify the format of the
+output files DL_FIELD creates. The Molecular Dynamics packages DL_POLY, GROMACS and LAMMPS are currently supported, along
+with ChemShell for QM/MM. DL_FIELD always produces DL_POLY files (first line), whereas the second line specifies the format of
+secondary output files.</p>
+<p>The third highlighted line provides the forcefield used for the parameter assignment. For a list of available forcefields, consult
+the reference manual.</p>
+<p>The final line highlighted is how users can specify the path to their input structure. DL_field currently supports the PDB, xyz and mol2
+file formats. For more information on how to ensure DL_field can read your input structure properly, visit this
+<a class="reference external" href="https://dl-sdg.github.io/RESOURCES/TUTORIALS/dlf_12.html">page</a>.</p>
+<p>The other operations in the CONTROL file may be changed according to specific user or forcefield requirements. The
+<a class="reference internal" href="index.html"><span class="doc">tutorials</span></a> in this series provide examples of this for various systems.</p>
+</section>
+<section id="dl-field-path-file">
+<span id="dl-field-path"></span><h2>DL_FIELD path file<a class="headerlink" href="#dl-field-path-file" title="Link to this heading">#</a></h2>
+<p>As mentioned previously, the <em>dl_f_path</em> file contains the <em>relative</em> paths to the CONTROL file, output
+files and solvent templates, amoungst others (see <a class="reference external" href="https://dl-sdg.github.io/RESOURCES/TUTORIALS/dlf_24.html">here</a>.
+You must not use absolute paths. An example file is printed below:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># Directory paths for DL_FIELD version 4.10.
+# C W Yong, January 2024
+
+# paths
+library = lib/
+solvent = solvent/
+output  = output/
+
+# Control file
+
+control = tutorial_confs/dl_field.control
+
+##########################
+# optional files
+# Look for CHARMM rtf, and or prm files
+# See Chapters 13.3 and 13.4
+# charmm_rtf = pentanoic_acid.rtf  OPLS2005
+# charmm_prm = pentanoic_acid.prm  OPLS2005
+# charmm_psf = example.psf charmm36_prot
+# charmm_pdb = example.pdb charmm36_prot
+</pre></div>
+</div>
+<p>During the tutorials, change the CONTROL file path as required.</p>
+</section>
+<section id="setting-up-the-tutorials">
+<span id="preparing-tutorial"></span><h2>Setting up the tutorials<a class="headerlink" href="#setting-up-the-tutorials" title="Link to this heading">#</a></h2>
+<p>To keep track of the tutorial material, create the following two directories in <strong>dl_f_4.XX/</strong>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>tutorial_confs
+<span class="gp">$ </span>mkdir<span class="w"> </span>tutorial_controls
+</pre></div>
+</div>
+<p>Here we will place the input molecule configuration files and corresponding CONTROL file for each tutorial. An example
+control file should already be located in <strong>dl_f_4.XX/</strong>, which we can copy to <strong>tutorial_controls/</strong>.</p>
+<p>Finally, we need to update <em>dl_f_path</em> with the new CONTROL file location. Comment out the old location and add the highlighted
+line.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># control = dl_field.control # old location
+<span class="hll">control = tutorial_controls/dl_field.control # new location
+</span></pre></div>
+</div>
+<p>The file name can be modified from the default <em>dl_field.control</em> as required.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome to the Beginner’s DL_Field Tutorials!</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="box_of_water.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial for box of rigid water</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-field-control-file">DL_FIELD control file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-field-path-file">DL_FIELD path file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-tutorials">Setting up the tutorials</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Lois_Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Lois_Smith.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
