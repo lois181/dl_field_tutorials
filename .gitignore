@@ -9,3 +9,7 @@ __pycache__/
 # Virtual environments
 venv/
 .env/
+
+# ignore Python virtual environments
+environment1/
+
