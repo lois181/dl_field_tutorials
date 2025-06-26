@@ -13,3 +13,12 @@ venv/
 # ignore Python virtual environments
 environment1/
 
+
+# ignore all build artifacts
+docs/_build/
+# except our html site
+!docs/_build/html/
+!docs/_build/html/**
+
+
+
